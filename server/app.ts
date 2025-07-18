@@ -3,6 +3,7 @@ import express, { NextFunction, Request, Response } from "express";
 export const app = express();
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { ErrorMiddleware } from "./middleware/error";
 
 // Body Parser
 app.use(express.json({ limit: "50mb" }));
@@ -32,13 +33,5 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next(err);
 });
 
-// Global Error Handler
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  err.statusCode = err.statusCode || 500;
-  err.message = err.message || "Internal Server Error";
-
-  res.status(err.statusCode).json({
-    success: false,
-    message: err.message,
-  });
-});
+// Error Handler Middleware
+app.use(ErrorMiddleware);
