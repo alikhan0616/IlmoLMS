@@ -23,7 +23,6 @@ interface ICourseData extends Document {
   title: string;
   description: string;
   videoUrl: string;
-  videoThumbnail: object;
   videoSection: string;
   videoDuration: number;
   videoPlayer: string;
@@ -71,7 +70,6 @@ const commentSchema = new Schema<IComment>({
 
 const courseDataSchema = new Schema<ICourseData>({
   videoUrl: String,
-  videoThumbnail: String,
   title: String,
   videoSection: String,
   description: String,
@@ -100,11 +98,9 @@ const courseSchema = new Schema<ICourse>({
   thumbnail: {
     public_id: {
       type: String,
-      required: [true, "Error occured in uploading thumbnail"],
     },
     url: {
       type: String,
-      required: [true, "Error occured in uploading thumbnail"],
     },
   },
   tags: {
