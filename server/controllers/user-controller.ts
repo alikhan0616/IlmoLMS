@@ -9,6 +9,7 @@ import path from "path";
 import sendMail from "../utils/sendMail";
 import { sendToken } from "../utils/jwt";
 import { redis } from "../utils/redis";
+import { getUserById } from "../services/user.service";
 
 // Register User
 interface IRegisterationBody {
@@ -182,6 +183,123 @@ export const logoutUser = CatchAsyncError(
       res.status(200).json({
         success: true,
         message: "Logged out successfully!",
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+// Get User Info
+export const getUserInfo = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const userId = req.user?._id;
+      getUserById(userId as string, res);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+// Social Authentication
+interface ISocialAuth {
+  email: string;
+  name: string;
+  avatar: string;
+}
+export const socialAuth = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { email, name, avatar } = req.body as ISocialAuth;
+      const user = await userModel.findOne({ email });
+      if (!user) {
+        const newUser = await userModel.create({ email, name, avatar });
+        sendToken(newUser, 200, res);
+      } else {
+        sendToken(user, 200, res);
+      }
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+// Update User Info
+interface IUpdateUserInfo {
+  name?: string;
+  email?: string;
+}
+
+export const updateUserInfo = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      const { name, email } = req.body as IUpdateUserInfo;
+      const userId = req.user?._id;
+      const user = await userModel.findById(userId);
+
+      if (email && user) {
+        const isEmailExists = await userModel.findOne({ email });
+        if (isEmailExists) {
+          return next(
+            new ErrorHandler("User with this email already exists!", 400)
+          );
+        }
+        user.email = email;
+      }
+      if (name && user) {
+        user.name = name;
+      }
+
+      await user?.save();
+
+      await redis.set(userId as string, JSON.stringify(user));
+
+      res.status(201).json({
+        success: true,
+        user,
+      });
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 400));
+    }
+  }
+);
+
+// Update Password
+interface IUpdatePassword {
+  oldPassword: string;
+  newPassword: string;
+}
+
+export const updatePassword = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      if (!req.body) {
+        return next(new ErrorHandler("Please enter passwords", 400));
+      }
+      const { oldPassword, newPassword } = req.body as IUpdatePassword;
+      if (!oldPassword || !newPassword) {
+        return next(new ErrorHandler("Please enter passwords", 400));
+      }
+      const user = await userModel.findById(req.user?._id).select("+password");
+
+      if (user?.password === undefined) {
+        return next(
+          new ErrorHandler("Can't change password on social auth", 400)
+        );
+      }
+
+      const isPasswordMatch = await user?.comparePassword(oldPassword);
+      if (!isPasswordMatch) {
+        return next(new ErrorHandler("Invalid passowrd", 400));
+      }
+      user.password = newPassword;
+      await user.save();
+
+      await redis.set(req.user?._id as string, JSON.stringify(user));
+      res.status(201).json({
+        success: true,
+        user,
       });
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 400));
