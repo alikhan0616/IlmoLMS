@@ -5,6 +5,7 @@ import {
   addQuestion,
   addReplyToReview,
   addReview,
+  deleteCourse,
   editCourse,
   getAllCourses,
   getAllCoursesComplete,
@@ -62,5 +63,13 @@ courseRouter.get(
   isAuthenticated,
   authorizeRoles("admin"),
   getAllCoursesComplete
+);
+
+// Delete User (Admin)
+courseRouter.delete(
+  "/delete/:id",
+  isAuthenticated,
+  authorizeRoles("admin"),
+  deleteCourse
 );
 export default courseRouter;
