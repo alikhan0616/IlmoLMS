@@ -4,8 +4,6 @@ import { CatchAsyncError } from "../middleware/catchAsyncErrors";
 import OrderModel, { IOrder } from "../models/order-model";
 import userModel from "../models/user-model";
 import courseModel from "../models/course-model";
-import path from "path";
-import ejs from "ejs";
 import sendMail from "../utils/sendMail";
 import NotificationModel from "../models/notification-model";
 import { newOrder } from "../services/order-service";
