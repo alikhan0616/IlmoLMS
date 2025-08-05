@@ -1,12 +1,12 @@
 import { Response, Request, NextFunction } from "express";
 import ErrorHandler from "../utils/ErrorHandler";
 import { CatchAsyncError } from "../middleware/catchAsyncErrors";
-import OrderModel, { IOrder } from "../models/order-model";
+import { IOrder } from "../models/order-model";
 import userModel from "../models/user-model";
 import courseModel from "../models/course-model";
 import sendMail from "../utils/sendMail";
 import NotificationModel from "../models/notification-model";
-import { newOrder } from "../services/order-service";
+import { getAllOrdersService, newOrder } from "../services/order-service";
 
 // Create Order
 export const createOrder = CatchAsyncError(
@@ -77,6 +77,17 @@ export const createOrder = CatchAsyncError(
       await course.save();
 
       newOrder(data, res, next);
+    } catch (error: any) {
+      return next(new ErrorHandler(error.message, 500));
+    }
+  }
+);
+
+// Get All Orders --- Admin
+export const getAllOrders = CatchAsyncError(
+  async (req: Request, res: Response, next: NextFunction) => {
+    try {
+      getAllOrdersService(res);
     } catch (error: any) {
       return next(new ErrorHandler(error.message, 500));
     }
