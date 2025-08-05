@@ -6,6 +6,7 @@ import cookieParser from "cookie-parser";
 import { ErrorMiddleware } from "./middleware/error";
 import userRouter from "./routes/user-route";
 import courseRouter from "./routes/course-route";
+import orderRouter from "./routes/order-route";
 
 // Body Parser
 app.use(express.json({ limit: "50mb" }));
@@ -24,6 +25,7 @@ app.use(
 // Routes
 app.use("/api/user", userRouter);
 app.use("/api/course", courseRouter);
+app.use("/api/order", orderRouter);
 
 // Testing API
 app.get("/test", (req: Request, res: Response) => {

@@ -1,4 +1,3 @@
-require("dotenv").config();
 import mongoose, { Document, Model, Schema } from "mongoose";
 import { IUser } from "./user-model";
 
