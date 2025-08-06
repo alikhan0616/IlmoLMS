@@ -29,7 +29,9 @@ export const isAuthenticated = CatchAsyncError(
     }
     const user = await redis.get(decoded.id);
     if (!user) {
-      return next(new ErrorHandler("User not found", 400));
+      return next(
+        new ErrorHandler("Please login to access this resource", 400)
+      );
     }
     req.user = JSON.parse(user);
     next();
@@ -60,7 +62,7 @@ export const updateAccessToken = CatchAsyncError(
         refresh_token,
         process.env.REFRESH_TOKEN as string
       ) as JwtPayload;
-      const message = "Something went wrong in refreshing token";
+      const message = "Please login for access to this resource";
       if (!decoded) {
         return next(new ErrorHandler(message, 400));
       }
@@ -91,6 +93,8 @@ export const updateAccessToken = CatchAsyncError(
       req.user = user;
       res.cookie("access_token", accessToken, accessTokenOptions);
       res.cookie("refresh_token", refreshToken, refreshTokenOptions);
+
+      await redis.set(user._id as string, JSON.stringify(user), "EX", 604800); // 604800 sec = 7 days
 
       res.status(200).json({
         success: true,
