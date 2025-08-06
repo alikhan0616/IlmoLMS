@@ -9,6 +9,7 @@ import courseRouter from "./routes/course-route";
 import orderRouter from "./routes/order-route";
 import notificationRouter from "./routes/notification-route";
 import analyticsRouter from "./routes/analytics-route";
+import layoutRouter from "./routes/layout-route";
 
 // Body Parser
 app.use(express.json({ limit: "50mb" }));
@@ -30,6 +31,7 @@ app.use("/api/course", courseRouter);
 app.use("/api/order", orderRouter);
 app.use("/api/notification", notificationRouter);
 app.use("/api/analytics", analyticsRouter);
+app.use("/api/layout", layoutRouter);
 
 // Testing API
 app.get("/test", (req: Request, res: Response) => {
