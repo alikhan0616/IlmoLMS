@@ -80,55 +80,58 @@ const courseDataSchema = new Schema<ICourseData>({
   questions: [commentSchema],
 });
 
-const courseSchema = new Schema<ICourse>({
-  name: {
-    type: String,
-    required: [true, "Please enter your name"],
-  },
-  description: {
-    type: String,
-    required: [true, "Please enter description for the course"],
-  },
-  price: {
-    type: Number,
-    required: [true, "Please enter price"],
-  },
-  estimatedPrice: {
-    type: Number,
-  },
-  thumbnail: {
-    public_id: {
+const courseSchema = new Schema<ICourse>(
+  {
+    name: {
       type: String,
+      required: [true, "Please enter your name"],
     },
-    url: {
+    description: {
       type: String,
+      required: [true, "Please enter description for the course"],
+    },
+    price: {
+      type: Number,
+      required: [true, "Please enter price"],
+    },
+    estimatedPrice: {
+      type: Number,
+    },
+    thumbnail: {
+      public_id: {
+        type: String,
+      },
+      url: {
+        type: String,
+      },
+    },
+    tags: {
+      type: String,
+      required: [true, "Please enter tags for the course"],
+    },
+    level: {
+      type: String,
+      required: [true, "Please select course level"],
+    },
+    demoUrl: {
+      type: String,
+      required: [true, "Please enter demo video url"],
+    },
+    benefits: [{ title: String }],
+    prerequisites: [{ title: String }],
+    reviews: [reviewSchema],
+    courseData: [courseDataSchema],
+    ratings: {
+      type: Number,
+      default: 0,
+    },
+    purchased: {
+      type: Number,
+      default: 0,
     },
   },
-  tags: {
-    type: String,
-    required: [true, "Please enter tags for the course"],
-  },
-  level: {
-    type: String,
-    required: [true, "Please select course level"],
-  },
-  demoUrl: {
-    type: String,
-    required: [true, "Please enter demo video url"],
-  },
-  benefits: [{ title: String }],
-  prerequisites: [{ title: String }],
-  reviews: [reviewSchema],
-  courseData: [courseDataSchema],
-  ratings: {
-    type: Number,
-    default: 0,
-  },
-  purchased: {
-    type: Number,
-    default: 0,
-  },
-});
+  { timestamps: true }
+);
 
 const courseModel: Model<ICourse> = mongoose.model("Course", courseSchema);
 
