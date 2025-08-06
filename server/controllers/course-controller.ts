@@ -122,7 +122,7 @@ export const getAllCourses = CatchAsyncError(
             "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
           );
 
-        await redis.set("allCourses", JSON.stringify(courses));
+        await redis.set("allCourses", JSON.stringify(courses), "EX", 604800); // 604800 sec = 7 days
 
         res.status(200).json({
           success: true,
