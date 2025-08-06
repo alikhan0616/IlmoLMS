@@ -51,21 +51,28 @@ const NavItems = ({
       {isMobile && (
         <div className="800px:hidden mt-5">
           <div className="w-full text-center py-6">
-            {navItemsData &&
-              navItemsData.map((item, index) => (
-                <Link key={index} href={item.url}>
-                  <span
-                    className={`${
-                      activeItem === index
-                        ? "dark:text-orangeali text-red-600"
-                        : "dark:text-white text-black"
-                    } text-lg px-6 font-Poppins font-normal block py-2 transition-colors duration-200`}
-                  >
-                    {item.name}
-                  </span>
-                </Link>
-              ))}
+            <Link href={"/"} passHref>
+              <span
+                className={`text-2xl font-Poppins font-[500] text-back dark:text-white`}
+              >
+                Ilmo
+              </span>
+            </Link>
           </div>
+          {navItemsData &&
+            navItemsData.map((item, index) => (
+              <Link key={index} href={item.url}>
+                <span
+                  className={`${
+                    activeItem === index
+                      ? "dark:text-[#37a39a] text-red-600"
+                      : "dark:text-white text-black"
+                  } text-lg px-6 font-Poppins font-normal block py-2 transition-colors duration-200`}
+                >
+                  {item.name}
+                </span>
+              </Link>
+            ))}
         </div>
       )}
     </>

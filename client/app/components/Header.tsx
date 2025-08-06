@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import NavItems from "./NavItems";
 import { ThemeSwitcher } from "../utils/ThemeSwitcher";
+import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
@@ -29,6 +30,12 @@ const Header = ({ activeItem, open, setOpen }: Props) => {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  const handleClose = (e: React.MouseEvent<HTMLDivElement>) => {
+    if ((e.target as HTMLDivElement).id === "screen") {
+      setOpenSidebar(false);
+    }
+  };
+
   return (
     <div className="w-full relative">
       <div
@@ -52,9 +59,44 @@ const Header = ({ activeItem, open, setOpen }: Props) => {
             <div className="flex items-center">
               <NavItems activeItem={activeItem} isMobile={false} />
               <ThemeSwitcher />
+              {/* Only for Mobile */}
+              <div className="800px:hidden">
+                <HiOutlineMenuAlt3
+                  size={25}
+                  className="cursor-pointer dark:text-white text-black"
+                  onClick={() => setOpenSidebar(true)}
+                />
+              </div>
+              <HiOutlineUserCircle
+                size={25}
+                className="cursor-pointer 800px:block hidden dark:text-white text-black"
+                onClick={() => setOpen(true)}
+              />
             </div>
           </div>
         </div>
+        {/* Mobile Sidebar */}
+        {openSidebar && (
+          <div
+            className="fixed 800px:hidden w-full h-screen top-0 z-[9999] dark:bg-[unset] bg-[#0000005e]"
+            id="screen"
+            onClick={handleClose}
+          >
+            <div className="w-[70%] fixed z-[99999999] h-screen bg-white dark:bg-slate-900 dark:bg-opacity-20 top-0 right-0">
+              <NavItems activeItem={activeItem} isMobile={true} />
+              <HiOutlineUserCircle
+                size={25}
+                className="cursor-pointer ml-5 my-2 text-black dark:text-white"
+                onClick={() => setOpen(true)}
+              />
+              <br />
+              <br />
+              <p className="text-md px-2 pl-5 text-black dark:text-white">
+                Copyright &#169; 2025 Ilmo LMS
+              </p>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
