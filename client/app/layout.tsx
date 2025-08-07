@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Poppins, Josefin_Sans } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "next-themes";
+import { Toaster } from "react-hot-toast";
 
 const poppins = Poppins({
   variable: "--font-Poppins",
@@ -30,6 +31,7 @@ export default function RootLayout({
       <body className={`${poppins.variable} ${josefinSans.variable} `}>
         <ThemeProvider enableSystem={true} defaultTheme="system">
           {children}
+          <Toaster position="top-center" reverseOrder={false} />
         </ThemeProvider>
       </body>
     </html>

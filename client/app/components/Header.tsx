@@ -5,13 +5,19 @@ import { useState, useEffect } from "react";
 import NavItems from "./NavItems";
 import { ThemeSwitcher } from "../utils/ThemeSwitcher";
 import { HiOutlineMenuAlt3, HiOutlineUserCircle } from "react-icons/hi";
+import CustomModal from "../utils/CustomModal";
+import Login from "../components/Auth/Login";
+import SignUp from "../components/Auth/SingUp";
+import Verification from "../components/Auth/Verification";
 type Props = {
   open: boolean;
   setOpen: (open: boolean) => void;
   activeItem: number;
+  route: string;
+  setRoute: (route: string) => void;
 };
 
-const Header = ({ activeItem, open, setOpen }: Props) => {
+const Header = ({ activeItem, open, route, setRoute, setOpen }: Props) => {
   const [active, setActive] = useState(false);
   const [openSidebar, setOpenSidebar] = useState(false);
 
@@ -41,8 +47,8 @@ const Header = ({ activeItem, open, setOpen }: Props) => {
       <div
         className={`${
           active
-            ? "bg-white-900 dark:bg-opacity-50 dark:bg-gradient-to-b dark:from-gray-900 dark:to-black backdrop-blur-sm fixed top-0 left-0 w-full h-[80px] z-[80] border-b border-gray-200 dark:border-[#ffffff1c] shadow-xl transition-all duration-500"
-            : "bg-transparet dark:bg-gradient-to-b dark:from-gray-900 dark:to-black  w-full border-b border-gray-200 dark:border-[#ffffff70] dark:border-b-2  shadow-md h-[80px] z-[80] dark:shadow-md transition-all duration-500"
+            ? "bg-white-900 dark:bg-opacity-50  dark:from-[#0a0e27] dark:via-[#1a1f3a] dark:to-[#0f1419]  backdrop-blur-sm fixed top-0 left-0 w-full h-[80px] z-[80] border-b border-gray-200 dark:border-[#ffffff1c] shadow-xl transition-all duration-500"
+            : "bg-transparet  dark:from-[#0a0e27] dark:via-[#1a1f3a] dark:to-[#0f1419]   w-full border-b border-gray-200 dark:border-[#ffffff70] dark:border-b-2  shadow-md h-[80px] z-[80] dark:shadow-md transition-all duration-500"
         }`}
       >
         {/* Add your header content here */}
@@ -98,6 +104,45 @@ const Header = ({ activeItem, open, setOpen }: Props) => {
           </div>
         )}
       </div>
+      {route === "Login" && (
+        <>
+          {open && (
+            <CustomModal
+              open={open}
+              setOpen={setOpen}
+              setRoute={setRoute}
+              activeItem={activeItem}
+              component={Login}
+            />
+          )}
+        </>
+      )}
+      {route === "Sign-Up" && (
+        <>
+          {open && (
+            <CustomModal
+              open={open}
+              setOpen={setOpen}
+              setRoute={setRoute}
+              activeItem={activeItem}
+              component={SignUp}
+            />
+          )}
+        </>
+      )}
+      {route === "Verification" && (
+        <>
+          {open && (
+            <CustomModal
+              open={open}
+              setOpen={setOpen}
+              setRoute={setRoute}
+              activeItem={activeItem}
+              component={Verification}
+            />
+          )}
+        </>
+      )}
     </div>
   );
 };
