@@ -15,7 +15,7 @@ type VerifyNumber = {
 };
 const Verification = ({ setRoute }: Props) => {
   const [invalidError, setInvalidError] = useState(false);
-  const { token } = useSelector((state: any) => state.auth);
+  const { token } = useSelector((state: any) => state.auth); // eslint-disable-line @typescript-eslint/no-explicit-any
   const [activation, { isSuccess, error }] = useActivationMutation();
 
   useEffect(() => {
