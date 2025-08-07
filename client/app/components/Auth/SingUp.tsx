@@ -7,12 +7,14 @@ import {
   AiFillGithub,
 } from "react-icons/ai";
 import { FcGoogle } from "react-icons/fc";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { styles } from "../../styles/style";
+import { useRegisterMutation } from "@/redux/features/auth/authApi";
+import toast from "react-hot-toast";
 
 type Props = {
   setOpen: (open: boolean) => void; // Add this
-  setRoute?: (route: string) => void; // Make optional to match CustomModal
+  setRoute: (route: string) => void; // Make optional to match CustomModal
 };
 
 const schema = Yup.object().shape({
@@ -26,12 +28,35 @@ const schema = Yup.object().shape({
 
 const SignUp = ({ setOpen, setRoute }: Props) => {
   const [show, setShow] = useState(false);
+  const [register, { isError, data, error, isSuccess }] = useRegisterMutation();
 
+  useEffect(() => {
+    if (isSuccess) {
+      const message = data?.message || "Registration successful";
+      toast.success(message);
+      setRoute("Verification");
+    }
+    if (error) {
+      if ("data" in error) {
+        // Fix the error data access
+        const errorData = error.data as { success?: boolean; message?: string };
+        toast.error(errorData?.message || "Registration failed");
+      } else {
+        // Handle other types of errors
+        toast.error("An unexpected error occurred");
+      }
+    }
+  }, [isSuccess, error, data, setRoute]);
   const formik = useFormik({
     initialValues: { name: "", email: "", password: "" },
     validationSchema: schema,
     onSubmit: async ({ name, email, password }) => {
-      setRoute && setRoute("Verification");
+      const data = {
+        name,
+        email,
+        password,
+      };
+      await register(data);
     },
   });
 

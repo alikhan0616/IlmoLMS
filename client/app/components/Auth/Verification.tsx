@@ -1,7 +1,9 @@
+import { useActivationMutation } from "@/redux/features/auth/authApi";
 import { styles } from "../../styles/style";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
 import { VscWorkspaceTrusted } from "react-icons/vsc";
+import { useSelector } from "react-redux";
 type Props = {
   setRoute: (route: string) => void;
 };
@@ -13,12 +15,33 @@ type VerifyNumber = {
 };
 const Verification = ({ setRoute }: Props) => {
   const [invalidError, setInvalidError] = useState(false);
+  const { token } = useSelector((state: any) => state.auth);
+  const [activation, { isSuccess, error }] = useActivationMutation();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Account activated successfully");
+      setRoute("Login");
+    }
+    if (error) {
+      setInvalidError(true);
+      if ("data" in error) {
+        // Fix the error data access
+        const errorData = error.data as { success?: boolean; message?: string };
+        toast.error(errorData?.message || "Registration failed");
+      } else {
+        // Handle other types of errors
+        toast.error("An unexpected error occurred");
+      }
+    }
+  }, [isSuccess, error]);
   const inputRefs = [
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
     useRef<HTMLInputElement>(null),
   ];
+
   const [verifyNumber, setVerifyNumber] = useState<VerifyNumber>({
     0: "",
     1: "",
@@ -27,7 +50,15 @@ const Verification = ({ setRoute }: Props) => {
   });
 
   const verificationHandler = async () => {
-    setInvalidError(true);
+    const verificationNumber = Object.values(verifyNumber).join("");
+    if (verificationNumber.length !== 4) {
+      setInvalidError(true);
+      return;
+    }
+    await activation({
+      activation_token: token,
+      activation_code: verificationNumber,
+    });
   };
   const handleInputChange = (index: number, value: string) => {
     setInvalidError(false);
@@ -79,7 +110,12 @@ const Verification = ({ setRoute }: Props) => {
       <br />
       <h5 className="text-center pt-4 font-Poppins text-[14px] text-black dark:text-white">
         Go back to sign in?{" "}
-        <span className="text-[#2190ff] pl-1 cursor-pointer">Sign in</span>
+        <span
+          onClick={() => setRoute("Login")}
+          className="text-[#2190ff] pl-1 cursor-pointer"
+        >
+          Sign in
+        </span>
       </h5>
     </div>
   );
