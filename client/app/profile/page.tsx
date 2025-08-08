@@ -9,7 +9,7 @@ import { useSelector } from "react-redux";
 const Page = () => {
   const [route, setRoute] = useState("Login");
   const [open, setOpen] = useState(false);
-  const [activeItem, setActiveItem] = useState(0);
+  const [activeItem, setActiveItem] = useState(5);
   const { user } = useSelector((state: any) => state.auth);
   return (
     <div className="">

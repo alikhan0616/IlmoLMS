@@ -7,7 +7,7 @@ import { Providers } from "./Providers";
 import { SessionProvider } from "next-auth/react";
 import React from "react";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
-import Loader from "./components/Common/Leader.tsx/Loader";
+import Loader from "./components/Common/Loader.tsx/Loader";
 const poppins = Poppins({
   variable: "--font-Poppins",
   subsets: ["latin"],
