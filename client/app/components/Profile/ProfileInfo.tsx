@@ -4,7 +4,10 @@ import React, { useEffect, useState } from "react";
 import avatarIcon from "../../../public/assets/avatar.jpg";
 import { AiOutlineCamera } from "react-icons/ai";
 import { styles } from "@/app/styles/style";
-import { useUpdateAvatarMutation } from "@/redux/features/user/userApi";
+import {
+  useEditProfileMutation,
+  useUpdateAvatarMutation,
+} from "@/redux/features/user/userApi";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
 import toast from "react-hot-toast";
 type Props = {
@@ -14,6 +17,8 @@ type Props = {
 const ProfileInfo = ({ user, avatar }: Props) => {
   const [name, setName] = useState(user && user.name);
   const [updateAvatar, { isSuccess, error }] = useUpdateAvatarMutation();
+  const [editProfile, { isSuccess: success, error: editError }] =
+    useEditProfileMutation();
   const [loadUser, setLoadUser] = useState(false);
   const {} = useLoadUserQuery(undefined, { skip: loadUser ? false : true });
   const imageHandler = async (e: any) => {
@@ -28,22 +33,54 @@ const ProfileInfo = ({ user, avatar }: Props) => {
   };
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess || success) {
+      if (isSuccess) {
+        toast.success("Avatar updated successfully");
+      } else if (success) {
+        toast.success("User info updated successfully");
+      }
       setLoadUser(true);
     }
-    if (error) {
-      if ("data" in error) {
-        // Fix the error data access
-        const errorData = error.data as { success?: boolean; message?: string };
-        toast.error(errorData?.message || "Login failed");
-      } else {
-        // Handle other types of errors
-        toast.error("An unexpected error occurred");
+    if (error || editError) {
+      if (editError) {
+        if ("data" in editError) {
+          // Fix the editError data access
+          const editErrorData = editError.data as {
+            success?: boolean;
+            message?: string;
+          };
+          toast.error(editErrorData?.message || "Login failed");
+        } else {
+          // Handle other types of errors
+          toast.error("An unexpected error occurred");
+        }
+      }
+      if (error) {
+        if ("data" in error) {
+          // Fix the error data access
+          const errorData = error.data as {
+            success?: boolean;
+            message?: string;
+          };
+          toast.error(errorData?.message || "Login failed");
+        } else {
+          // Handle other types of errors
+          toast.error("An unexpected error occurred");
+        }
       }
     }
-  }, [isSuccess, error]);
-  const handleSubmit = () => {
-    console.log("hello");
+  }, [isSuccess, error, editError, success]);
+  const handleSubmit = async (e: any) => {
+    e.preventDefault();
+    if (name.length < 3) {
+      toast.error("Name should be atleast 3 characters long!");
+      return;
+    }
+    if (name === "") {
+      toast.error("Please enter a name!");
+      return;
+    }
+    await editProfile(name);
   };
   return (
     <>

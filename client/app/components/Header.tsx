@@ -115,7 +115,7 @@ const Header = ({ activeItem, open, route, setRoute, setOpen }: Props) => {
                     height={30}
                     src={user.avatar ? user.avatar.url : avatar}
                     alt="user-icon"
-                    className={`w-[30px] h-[30px] rounded-full cursor-pointer`}
+                    className={`w-[30px] 800px:block hidden h-[30px] rounded-full cursor-pointer`}
                     style={{
                       border: activeItem === 5 ? "2px solid #37a39a" : "none",
                     }}
