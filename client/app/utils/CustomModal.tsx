@@ -6,9 +6,9 @@ type Props = {
   activeItem: unknown;
   component: React.ComponentType<{
     setOpen: (open: boolean) => void;
-    setRoute?: (route: string) => void;
+    setRoute: (route: string) => void;
   }>;
-  setRoute?: (route: string) => void;
+  setRoute: (route: string) => void;
 };
 const CustomModal = ({
   open,
