@@ -115,3 +115,52 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+/* Sleek modern scrollbar (global) */
+
+/* Colors adapt to your data-theme (light/dark) */
+:root {
+  --sb-track: rgba(0, 0, 0, 0.06);
+  --sb-thumb-color: #6f8af7; /* used by Firefox */
+  --sb-thumb-bg: linear-gradient(180deg, #3b82f6 0%, #8b5cf6 100%);
+  --sb-thumb-hover-bg: linear-gradient(180deg, #2563eb 0%, #7c3aed 100%);
+}
+
+[data-theme="dark"] {
+  --sb-track: rgba(255, 255, 255, 0.08);
+  --sb-thumb-color: #8fb5ff; /* used by Firefox */
+  --sb-thumb-bg: linear-gradient(180deg, #60a5fa 0%, #a78bfa 100%);
+  --sb-thumb-hover-bg: linear-gradient(180deg, #3b82f6 0%, #8b5cf6 100%);
+}
+
+/* Keep layout stable when scrollbar appears */
+html {
+  scrollbar-gutter: stable;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--sb-thumb-color) var(--sb-track);
+}
+
+/* WebKit (Chrome, Edge, Safari, Opera) */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: var(--sb-track);
+  border-radius: 9999px;
+}
+*::-webkit-scrollbar-thumb {
+  background: var(--sb-thumb-bg);
+  border-radius: 9999px;
+  border: 2px solid var(--sb-track); /* creates inner padding */
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: var(--sb-thumb-hover-bg);
+}
+*::-webkit-scrollbar-corner {
+  background: transparent;
+}
