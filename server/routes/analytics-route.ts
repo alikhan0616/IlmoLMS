@@ -1,5 +1,9 @@
 import express from "express";
-import { authorizeRoles, isAuthenticated } from "../middleware/auth";
+import {
+  authorizeRoles,
+  isAuthenticated,
+  updateAccessToken,
+} from "../middleware/auth";
 import {
   getCoursesAnalytics,
   getOrdersAnalytics,
@@ -11,6 +15,7 @@ const analyticsRouter = express.Router();
 // Get User's Analytics (Admin)
 analyticsRouter.get(
   "/users",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   getUsersAnalytics
@@ -19,6 +24,7 @@ analyticsRouter.get(
 // Get Course's Analytics (Admin)
 analyticsRouter.get(
   "/courses",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   getCoursesAnalytics
@@ -27,6 +33,7 @@ analyticsRouter.get(
 // Get Order's Analytics (Admin)
 analyticsRouter.get(
   "/orders",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   getOrdersAnalytics

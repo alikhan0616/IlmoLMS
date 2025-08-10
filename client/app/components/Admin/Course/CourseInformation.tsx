@@ -108,7 +108,7 @@ const CourseInformation = ({
           </div>
           <div className="w-[45%]">
             <label className={`${styles.label}`}>
-              Discount Price (Optional)
+              Estimated Price (Optional)
             </label>
             <input
               type="number"

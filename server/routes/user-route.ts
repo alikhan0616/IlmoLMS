@@ -30,29 +30,45 @@ userRouter.post(`/activation`, activateUser);
 userRouter.post("/login", loginUser);
 
 // User Logout
-userRouter.get("/logout", isAuthenticated, logoutUser);
+userRouter.get("/logout", updateAccessToken, isAuthenticated, logoutUser);
 
 // User's Refresh Token
 userRouter.get("/refresh-token", updateAccessToken);
 
 // Get User's Data
-userRouter.get("/me", isAuthenticated, getUserInfo);
+userRouter.get("/me", updateAccessToken, isAuthenticated, getUserInfo);
 
 // Social Authentication
 userRouter.post("/social-auth", socialAuth);
 
 // Update User's Info
-userRouter.put("/update-info", isAuthenticated, updateUserInfo);
+userRouter.put(
+  "/update-info",
+  updateAccessToken,
+  isAuthenticated,
+  updateUserInfo
+);
 
 // Update User's Password
-userRouter.put("/update-password", isAuthenticated, updatePassword);
+userRouter.put(
+  "/update-password",
+  updateAccessToken,
+  isAuthenticated,
+  updatePassword
+);
 
 // Update User's Avatar
-userRouter.put("/update-avatar", isAuthenticated, updateProfilePicture);
+userRouter.put(
+  "/update-avatar",
+  updateAccessToken,
+  isAuthenticated,
+  updateProfilePicture
+);
 
 // Get All Users (Admin)
 userRouter.get(
   "/get-all",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   getAllUsers
@@ -61,6 +77,7 @@ userRouter.get(
 // Update User Role (Admin)
 userRouter.put(
   "/update-role",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   updateUserRole
@@ -69,6 +86,7 @@ userRouter.put(
 // Delete User (Admin)
 userRouter.delete(
   "/delete/:id",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   deleteUser

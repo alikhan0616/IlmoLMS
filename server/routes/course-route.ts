@@ -1,5 +1,9 @@
 import express from "express";
-import { authorizeRoles, isAuthenticated } from "../middleware/auth";
+import {
+  authorizeRoles,
+  isAuthenticated,
+  updateAccessToken,
+} from "../middleware/auth";
 import {
   addAnswer,
   addQuestion,
@@ -7,6 +11,7 @@ import {
   addReview,
   deleteCourse,
   editCourse,
+  generateVideoUrl,
   getAllCourses,
   getAllCoursesComplete,
   getCourseByUser,
@@ -19,6 +24,7 @@ const courseRouter = express.Router();
 // Create Course
 courseRouter.post(
   "/create",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   uploadCourse
@@ -27,6 +33,7 @@ courseRouter.post(
 // Edit/Update Course
 courseRouter.put(
   "/update/:id",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   editCourse
@@ -38,20 +45,36 @@ courseRouter.get("/get/:id", getSingleCourse);
 courseRouter.get("/get-all", getAllCourses);
 
 //Get Course Content (Purchased)
-courseRouter.get("/get-course-content/:id", isAuthenticated, getCourseByUser);
+courseRouter.get(
+  "/get-course-content/:id",
+  updateAccessToken,
+  isAuthenticated,
+  getCourseByUser
+);
 
 //Post Question on Course Contant
-courseRouter.put("/add-question", isAuthenticated, addQuestion);
+courseRouter.put(
+  "/add-question",
+  updateAccessToken,
+  isAuthenticated,
+  addQuestion
+);
 
 //Post Answer on a Question
-courseRouter.put("/add-answer", isAuthenticated, addAnswer);
+courseRouter.put("/add-answer", updateAccessToken, isAuthenticated, addAnswer);
 
 //Post Review on a Course
-courseRouter.put("/add-review/:id", isAuthenticated, addReview);
+courseRouter.put(
+  "/add-review/:id",
+  updateAccessToken,
+  isAuthenticated,
+  addReview
+);
 
 //Post Reply to Review
 courseRouter.put(
   "/add-reply-review",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   addReplyToReview
@@ -60,14 +83,19 @@ courseRouter.put(
 // Get All Courses (Admin)
 courseRouter.get(
   "/get",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   getAllCoursesComplete
 );
 
-// Delete User (Admin)
+// Get VdoCipher OTP
+courseRouter.post("/getVdoCipherOTP", generateVideoUrl);
+
+// Delete Course (Admin)
 courseRouter.delete(
   "/delete/:id",
+  updateAccessToken,
   isAuthenticated,
   authorizeRoles("admin"),
   deleteCourse
