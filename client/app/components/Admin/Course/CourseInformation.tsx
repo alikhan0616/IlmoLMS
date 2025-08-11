@@ -192,12 +192,16 @@ const CourseInformation = ({
           >
             {courseInfo.thumbnail ? (
               <img
-                src={courseInfo.thumbnail}
+                src={
+                  courseInfo.thumbnail.url
+                    ? courseInfo.thumbnail.url
+                    : courseInfo.thumbnail
+                }
                 alt="thumbnail"
                 className="max-w-full w-full object-cover"
               />
             ) : (
-              <span>Drag and drop your thumbail here or click to browse</span>
+              <span>Drag and drop your thumbnail here or click to browse</span>
             )}
           </label>
         </div>

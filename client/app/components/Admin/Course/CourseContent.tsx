@@ -188,6 +188,7 @@ const CourseContent = ({
                       }}
                     />
                     <MdOutlineKeyboardArrowDown
+                      className="cursor-pointer"
                       fontSize="large"
                       style={{
                         transform: isCollapsed[index]

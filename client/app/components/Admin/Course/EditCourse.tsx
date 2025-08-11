@@ -4,16 +4,27 @@ import CourseOptions from "./CourseOptions";
 import CourseData from "./CourseData";
 import CourseContent from "./CourseContent";
 import CoursePreview from "./CoursePreview";
-import { useCreateCourseMutation } from "@/redux/features/course/courseApi";
+import {
+  useGetAllCoursesQuery,
+  useUpdateCourseMutation,
+} from "@/redux/features/course/courseApi";
 import toast from "react-hot-toast";
 import { redirect } from "next/navigation";
-const CreateCourse = () => {
-  const [createCourse, { isLoading, isSuccess, error }] =
-    useCreateCourseMutation();
+type Props = {
+  id: any;
+};
+const EditCourse = ({ id }: Props) => {
+  const { data, refetch } = useGetAllCoursesQuery(
+    {},
+    { refetchOnMountOrArgChange: true }
+  );
 
+  const [updateCourse, { isSuccess, error }] = useUpdateCourseMutation();
+
+  const editCourseData = data && data?.courses.find((i: any) => i._id === id);
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Course created successfully!");
+      toast.success("Course updated successfully!");
       redirect("/admin/courses");
     }
     if (error) {
@@ -26,7 +37,56 @@ const CreateCourse = () => {
         toast.error("An unexpected error occurred");
       }
     }
-  }, [isLoading, isSuccess, error]);
+  }, [isSuccess, error]);
+
+  useEffect(() => {
+    if (editCourseData) {
+      setCourseInfo({
+        name: editCourseData.name,
+        description: editCourseData.description,
+        price: editCourseData.price,
+        estimatedPrice: editCourseData.estimatedPrice,
+        tags: editCourseData.tags,
+        level: editCourseData.level,
+        demoUrl: editCourseData.demoUrl,
+        thumbnail: editCourseData.thumbnail.url,
+      });
+
+      // Deep copy benefits array
+      setBenefits(
+        editCourseData.benefits.map((benefit: any) => ({
+          title: benefit.title,
+        }))
+      );
+
+      // Deep copy prerequisites array
+      setPrerequisites(
+        editCourseData.prerequisites.map((prerequisite: any) => ({
+          title: prerequisite.title,
+        }))
+      );
+
+      // Deep copy courseContentData array with nested objects
+      setCourseContentData(
+        editCourseData.courseData.map((content: any) => ({
+          videoUrl: content.videoUrl,
+          title: content.title,
+          description: content.description,
+          videoSection: content.videoSection,
+          suggestion: content.suggestion,
+          _id: content._id, // Keep the ID for updates
+          links: content.links.map((link: any) => ({
+            title: link.title,
+            url: link.url,
+            _id: link._id, // Keep link IDs if they exist
+          })),
+          questions: content.questions
+            ? content.questions.map((q: any) => ({ ...q }))
+            : [],
+        }))
+      );
+    }
+  }, [editCourseData]);
   const [active, setActive] = useState(0);
   const [courseInfo, setCourseInfo] = useState({
     name: "",
@@ -100,9 +160,7 @@ const CreateCourse = () => {
 
   const handleCourseCreate = async (e: any) => {
     const data = courseData;
-    if (!isLoading) {
-      await createCourse(data);
-    }
+    await updateCourse({ id, data });
   };
 
   return (
@@ -141,7 +199,7 @@ const CreateCourse = () => {
             setActive={setActive}
             courseData={courseData}
             handleCourseCreate={handleCourseCreate}
-            isEdit={false}
+            isEdit={true}
           />
         )}
       </div>
@@ -152,4 +210,4 @@ const CreateCourse = () => {
   );
 };
 
-export default CreateCourse;
+export default EditCourse;

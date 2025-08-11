@@ -16,7 +16,27 @@ export const courseApi = apiSlice.injectEndpoints({
         credentials: "include" as const,
       }),
     }),
+    deleteCourse: builder.mutation({
+      query: (id) => ({
+        url: `course/delete/${id}`,
+        method: "DELETE",
+        credentials: "include" as const,
+      }),
+    }),
+    updateCourse: builder.mutation({
+      query: ({ id, data }) => ({
+        url: `course/update/${id}`,
+        method: "PUT",
+        body: data,
+        credentials: "include" as const,
+      }),
+    }),
   }),
 });
 
-export const { useCreateCourseMutation, useGetAllCoursesQuery } = courseApi;
+export const {
+  useCreateCourseMutation,
+  useDeleteCourseMutation,
+  useGetAllCoursesQuery,
+  useUpdateCourseMutation,
+} = courseApi;

@@ -8,6 +8,7 @@ type Props = {
   setActive: (active: number) => void;
   courseData: any;
   handleCourseCreate: any;
+  isEdit: boolean;
 };
 
 const CoursePreview = ({
@@ -15,6 +16,7 @@ const CoursePreview = ({
   setActive,
   courseData,
   handleCourseCreate,
+  isEdit,
 }: Props) => {
   const discountPercentage =
     ((courseData?.estimatedPrice - courseData?.price) /
@@ -33,7 +35,7 @@ const CoursePreview = ({
   return (
     <div className="w-[90%] m-auto py-5 mb-5">
       <div className="w-full relative">
-        <div className="w-full mt-10 rounded-xl overflow-hidden ring-1 ring-gray-200/60 dark:ring-white/10 shadow-sm bg-white/5 dark:bg-white/[0.03]">
+        <div className="inline mt-10 rounded-xl overflow-hidden ring-1 ring-gray-200/60 dark:ring-white/10 shadow-sm bg-white/5 dark:bg-white/[0.03]">
           <CoursePlayer
             videoUrl={courseData?.demoUrl}
             title={courseData?.title}
@@ -169,7 +171,7 @@ const CoursePreview = ({
           onClick={() => createCourse()}
           className="w-full 800px:w-[180px] flex items-center justify-center h-[40px] bg-[#37a39a] text-center text-[#fff] rounded mt-8 cursor-pointer shadow-sm ring-1 ring-black/5 dark:ring-white/10 hover:brightness-110 transition"
         >
-          Create Course
+          {isEdit ? "Update" : "Create"} Course
         </div>
       </div>
     </div>
