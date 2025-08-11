@@ -37,15 +37,22 @@ interface itemProps {
 }
 
 const Item: FC<itemProps> = ({ title, to, icon, selected, setSelected }) => {
+  const isActive = selected === title;
+
   return (
     <MenuItem
-      active={selected === title}
+      active={isActive}
       onClick={() => setSelected(title)}
-      icon={icon}
-      className="hover:!bg-[unset]"
+      icon={<div className={isActive ? "text-[#6870fa]" : ""}>{icon}</div>}
     >
-      <Link href={to} className="hover:!bg-[unset]">
-        <Typography className="!text-[16px] !font-Poppins text-black dark:text-white">
+      <Link href={to}>
+        <Typography
+          className={`!text-[16px] !font-Poppins ${
+            isActive
+              ? "text-[#6870fa] !font-semibold"
+              : "text-black dark:text-white"
+          }`}
+        >
           {title}
         </Typography>
       </Link>
