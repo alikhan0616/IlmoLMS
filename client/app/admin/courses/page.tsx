@@ -5,6 +5,7 @@ import AdminSidebar from "@/app/components/Admin/Sidebar/AdminSidebar";
 import PageHead from "@/app/components/Common/PageHead";
 import AdminProtected from "@/app/hooks/adminProtected";
 import AllCourses from "../../components/Admin/Course/AllCourses";
+
 const page = () => {
   return (
     <div>
@@ -15,10 +16,12 @@ const page = () => {
           keywords="Online Learning, Muhammad Ali Khan, Ali Khan, Learning, LMS, Programming, Tech"
         />
         <div className="flex h-screen">
-          <div className="1500px:w-[16px] w-1/5">
+          {/* Fix: Use consistent responsive classes */}
+          <div className="w-1/5 1500px:w-[250px]">
             <AdminSidebar />
           </div>
-          <div className="w-[85%] ">
+          {/* Fix: Make main content take remaining space */}
+          <div className="w-4/5 1500px:w-[calc(100%-250px)]">
             <DashboardHeader />
             <AllCourses />
           </div>

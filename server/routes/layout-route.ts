@@ -31,6 +31,6 @@ layoutRouter.put(
 );
 
 // Get Layout
-layoutRouter.get("/get", getLayoutByType);
+layoutRouter.get("/get/:type", getLayoutByType);
 
 export default layoutRouter;

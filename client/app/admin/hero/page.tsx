@@ -1,9 +1,9 @@
 "use client";
-import AdminSidebar from "../../../components/Admin/Sidebar/AdminSidebar";
-import PageHead from "../../../components/Common/PageHead";
-import EditCourse from "../../../components/Admin/Course/EditCourse";
-import DashboardHeader from "../../../components/Admin/DashboardHeader";
-import AdminProtected from "../../../hooks/adminProtected";
+import AdminSidebar from "../../components/Admin/Sidebar/AdminSidebar";
+import PageHead from "../../components/Common/PageHead";
+import EditHero from "../../components/Admin/Customization/EditHero";
+import DashboardHeader from "../../components/Admin/DashboardHeader";
+import AdminProtected from "../../hooks/adminProtected";
 const Page = ({ params }: any) => {
   const id = params?.id;
   console.log(id);
@@ -22,7 +22,8 @@ const Page = ({ params }: any) => {
           </div>
           <div className="w-[85%] ">
             <DashboardHeader />
-            <EditCourse id={id} />
+            {/* <CreateCourse /> */}
+            <EditHero />
           </div>
         </div>
       </AdminProtected>
