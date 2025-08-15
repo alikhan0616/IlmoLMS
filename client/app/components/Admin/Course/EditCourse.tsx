@@ -74,6 +74,7 @@ const EditCourse = ({ id }: Props) => {
           title: content.title,
           description: content.description,
           videoSection: content.videoSection,
+          videoLength: content.videoLength,
           suggestion: content.suggestion,
           _id: content._id, // Keep the ID for updates
           links: content.links.map((link: any) => ({
@@ -109,6 +110,7 @@ const EditCourse = ({ id }: Props) => {
       title: "",
       description: "",
       videoSection: "Untitled Section",
+      videoLength: "",
       links: [
         {
           title: "",
@@ -135,6 +137,7 @@ const EditCourse = ({ id }: Props) => {
       title: courseContent.title,
       videoSection: courseContent.videoSection,
       description: courseContent.description,
+      videoLength: courseContent.videoLength,
       links: courseContent.links.map((link) => ({
         title: link.title,
         url: link.url,

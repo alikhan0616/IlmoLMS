@@ -1,24 +1,26 @@
 "use client";
-
-import PageHead from "../components/Common/PageHead";
-import AdminSidebar from "../components/Admin/Sidebar/AdminSidebar";
-import DashboardHero from "../components/Admin/DashboardHero";
-import AdminProtected from "../hooks/adminProtected";
+import AdminSidebar from "../../components/Admin/Sidebar/AdminSidebar";
+import PageHead from "../../components/Common/PageHead";
+import UserAnalytics from "../../components/Admin/Analytics/UserAnalytics";
+import DashboardHeader from "../../components/Admin/DashboardHeader";
+import AdminProtected from "../../hooks/adminProtected";
 const Page = () => {
   return (
-    <div className="">
+    <div>
       <AdminProtected>
         <PageHead
           title="Ilmo - Admin"
           description="Ilmo is an interactive E-Learning platform where all students can learn and grow together"
           keywords="Online Learning, Muhammad Ali Khan, Ali Khan, Learning, LMS, Programming, Tech"
         />
-        <div className="flex h-[200vh]">
-          <div className="1500px:w-[16%] w-1/5">
+        <div className="flex">
+          <div className="1500px:w-[16px] w-1/5">
             <AdminSidebar />
           </div>
           <div className="w-[85%] ">
-            <DashboardHero isDashboard={true} />
+            <DashboardHeader />
+            {/* <CreateCourse /> */}
+            <UserAnalytics />
           </div>
         </div>
       </AdminProtected>

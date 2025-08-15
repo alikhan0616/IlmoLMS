@@ -2,9 +2,11 @@
 import ThemeSwitcher from "@/app/utils/ThemeSwitcher";
 import { useState } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
-
-const DashboardHeader = () => {
-  const [open, setOpen] = useState(false);
+type Props = {
+  open?: boolean;
+  setOpen?: any;
+};
+const DashboardHeader = ({ open, setOpen }: Props) => {
   const [notifications] = useState([
     {
       _id: "1",

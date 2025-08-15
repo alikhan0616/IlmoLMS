@@ -1,7 +1,7 @@
 "use client";
 import AdminSidebar from "../../components/Admin/Sidebar/AdminSidebar";
 import PageHead from "../../components/Common/PageHead";
-import EditFaq from "../../components/Admin/Customization/EditFaq";
+import CourseAnalytics from "../../components/Admin/Analytics/CourseAnalytics";
 import DashboardHeader from "../../components/Admin/DashboardHeader";
 import AdminProtected from "../../hooks/adminProtected";
 const Page = () => {
@@ -20,7 +20,7 @@ const Page = () => {
           <div className="w-[85%] ">
             <DashboardHeader />
             {/* <CreateCourse /> */}
-            <EditFaq />
+            <CourseAnalytics />
           </div>
         </div>
       </AdminProtected>

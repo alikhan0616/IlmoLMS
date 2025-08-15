@@ -4,9 +4,7 @@ import PageHead from "../../components/Common/PageHead";
 import EditCategories from "../../components/Admin/Customization/EditCategories";
 import DashboardHeader from "../../components/Admin/DashboardHeader";
 import AdminProtected from "../../hooks/adminProtected";
-const Page = ({ params }: any) => {
-  const id = params?.id;
-
+const Page = () => {
   return (
     <div>
       <AdminProtected>
