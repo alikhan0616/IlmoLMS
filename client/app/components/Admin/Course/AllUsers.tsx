@@ -3,7 +3,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { Box, Button, Modal } from "@mui/material";
 import { AiOutlineDelete, AiOutlineMail } from "react-icons/ai";
 import { useTheme } from "next-themes";
-import Loader from "../../Common/Loader.tsx/Loader";
+import Loader from "../../Common/Loader/Loader";
 import { format } from "timeago.js";
 import {
   useDeleteUserMutation,

@@ -32,6 +32,7 @@ const CreateCourse = () => {
     name: "",
     description: "",
     price: "",
+    category: "",
     estimatedPrice: "",
     tags: "",
     level: "",
@@ -47,6 +48,7 @@ const CreateCourse = () => {
       title: "",
       description: "",
       videoSection: "Untitled Section",
+      videoLength: "",
       links: [
         {
           title: "",
@@ -73,6 +75,7 @@ const CreateCourse = () => {
       title: courseContent.title,
       videoSection: courseContent.videoSection,
       description: courseContent.description,
+      videoLength: courseContent.videoLength,
       links: courseContent.links.map((link) => ({
         title: link.title,
         url: link.url,

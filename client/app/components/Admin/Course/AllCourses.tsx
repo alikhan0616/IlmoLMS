@@ -8,7 +8,7 @@ import {
   useDeleteCourseMutation,
   useGetAllCoursesQuery,
 } from "@/redux/features/course/courseApi";
-import Loader from "../../Common/Loader.tsx/Loader";
+import Loader from "../../Common/Loader/Loader";
 import { format } from "timeago.js";
 import { useEffect, useState } from "react";
 import { styles } from "@/app/styles/style";

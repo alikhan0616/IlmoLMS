@@ -46,6 +46,7 @@ const EditCourse = ({ id }: Props) => {
         description: editCourseData.description,
         price: editCourseData.price,
         estimatedPrice: editCourseData.estimatedPrice,
+        category: editCourseData.category,
         tags: editCourseData.tags,
         level: editCourseData.level,
         demoUrl: editCourseData.demoUrl,
@@ -91,6 +92,7 @@ const EditCourse = ({ id }: Props) => {
   const [courseInfo, setCourseInfo] = useState({
     name: "",
     description: "",
+    category: "",
     price: "",
     estimatedPrice: "",
     tags: "",

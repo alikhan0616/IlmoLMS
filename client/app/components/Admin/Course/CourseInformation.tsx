@@ -1,5 +1,6 @@
 import { styles } from "@/app/styles/style";
-import { useState } from "react";
+import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
+import { useEffect, useState } from "react";
 
 type Props = {
   courseInfo: any;
@@ -19,6 +20,15 @@ const CourseInformation = ({
     e.preventDefault();
     setActive(active + 1);
   };
+
+  const { data } = useGetHeroDataQuery("Categories", {});
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    if (data) {
+      setCategories(data.layout.categories);
+    }
+  }, [data]);
 
   const handleFileChange = (e: any) => {
     const file = e.target?.files?.[0];
@@ -124,20 +134,47 @@ const CourseInformation = ({
           </div>
         </div>
         <br />
-        <div className="">
-          <label className={`${styles.label}`}>Course Tags</label>
-          <input
-            type="text"
-            name=""
-            required
-            value={courseInfo.tags}
-            onChange={(e) =>
-              setCourseInfo({ ...courseInfo, tags: e.target.value })
-            }
-            id="tags"
-            placeholder="React, Redux, Beginner-Friendly, MERN"
-            className={`${styles.input}`}
-          />
+        <div className="w-full flex justify-between">
+          <div className="w-[45%]">
+            <label className={`${styles.label}`}>Course Tags</label>
+            <input
+              type="text"
+              name=""
+              required
+              value={courseInfo.tags}
+              onChange={(e) =>
+                setCourseInfo({ ...courseInfo, tags: e.target.value })
+              }
+              id="tags"
+              placeholder="React, Redux, Beginner-Friendly, MERN"
+              className={`${styles.input}`}
+            />
+          </div>
+          <div className="w-[45%]">
+            <label className={`${styles.label}`}>Course Category</label>
+            <select
+              className={`${styles.input} text-white`}
+              name="category"
+              id="category"
+              value={courseInfo.cateogry}
+              onChange={(e) =>
+                setCourseInfo({ ...courseInfo, category: e.target.value })
+              }
+            >
+              <option className="text-black" value="">
+                Select Category
+              </option>
+              {categories.map((item: any) => (
+                <option
+                  className="text-black"
+                  value={item.title}
+                  key={item._id}
+                >
+                  {item.title}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
         <br />
         <div className="w-full flex justify-between">

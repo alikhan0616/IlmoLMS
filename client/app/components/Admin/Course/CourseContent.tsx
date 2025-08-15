@@ -231,6 +231,22 @@ const CourseContent = ({
                     </div>
                     <div className="my-3">
                       <label className={`${styles.label}`}>
+                        Video Length (in minutes)
+                      </label>
+                      <input
+                        type="number"
+                        placeholder="60"
+                        className={`${styles.input}`}
+                        value={item.videoLength}
+                        onChange={(e) => {
+                          const updatedData = [...courseContentData];
+                          updatedData[index].videoLength = e.target.value;
+                          setCourseContentData(updatedData);
+                        }}
+                      />
+                    </div>
+                    <div className="my-3">
+                      <label className={`${styles.label}`}>
                         Video Description
                       </label>
                       <textarea

@@ -6,7 +6,6 @@ import DashboardHeader from "../../components/Admin/DashboardHeader";
 import AdminProtected from "../../hooks/adminProtected";
 const Page = ({ params }: any) => {
   const id = params?.id;
-  console.log(id);
 
   return (
     <div>
@@ -20,7 +19,7 @@ const Page = ({ params }: any) => {
           <div className="1500px:w-[16px] w-1/5">
             <AdminSidebar />
           </div>
-          <div className="w-[85%] ">
+          <div className="w-[80%] ">
             <DashboardHeader />
             {/* <CreateCourse /> */}
             <EditHero />

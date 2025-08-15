@@ -38,6 +38,7 @@ interface ICourse extends Document {
   estimatedPrice?: number;
   thumbnail: object;
   tags: string;
+  category: string;
   level: string;
   demoUrl: string;
   benefits: { title: string }[];
@@ -89,6 +90,10 @@ const courseSchema = new Schema<ICourse>(
     description: {
       type: String,
       required: [true, "Please enter description for the course"],
+    },
+    category: {
+      type: String,
+      required: [true, "Please enter category of the course"],
     },
     price: {
       type: Number,

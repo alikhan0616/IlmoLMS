@@ -30,7 +30,7 @@ const EditHero = () => {
   useEffect(() => {
     if (isSuccess) {
       refetch();
-      toast.success("Hero layout updated successfully!");
+      toast.success("Hero banner updated successfully!");
       reset(); // Reset the mutation state
     }
 
@@ -106,7 +106,7 @@ const EditHero = () => {
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             placeholder="Improve Your Online Learning Experience Better Instantly"
-            className="w-full text-xl lg:text-4xl font-bold text-white bg-transparent border-none outline-none resize-none leading-tight"
+            className="w-full text-xl lg:text-4xl font-bold text-black dark:text-white bg-transparent border-none outline-none resize-none leading-tight"
             rows={5}
             style={{ lineHeight: "1.3" }}
           />
@@ -117,7 +117,7 @@ const EditHero = () => {
             value={subTitle}
             onChange={(e) => setSubTitle(e.target.value)}
             placeholder="We have 40k+ Online courses & 500K+ Online registered student. Find your desired Courses from them."
-            className="w-full text-md text-gray-300 bg-transparent border-none outline-none resize-none leading-relaxed"
+            className="w-full text-md text-black dark:text-gray-300 bg-transparent border-none outline-none resize-none leading-relaxed"
             rows={3}
           />
         </div>
