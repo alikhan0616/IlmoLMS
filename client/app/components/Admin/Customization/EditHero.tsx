@@ -11,7 +11,7 @@ const EditHero = () => {
   const [title, setTitle] = useState("");
   const [image, setImage] = useState("");
   const [subTitle, setSubTitle] = useState("");
-  const { isLoading, data, refetch } = useGetHeroDataQuery("Banner", {
+  const { data, refetch } = useGetHeroDataQuery("Banner", {
     refetchOnMountOrArgChange: true,
   });
 

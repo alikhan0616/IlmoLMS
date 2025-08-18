@@ -5,9 +5,11 @@ import { BiSearch } from "react-icons/bi";
 import Image from "next/image";
 import Link from "next/link";
 import bannerImg1 from "../../../public/assets/banner-img-1.png";
+import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 
 const Hero = () => {
   const [search, setSearch] = useState("");
+  const { data } = useGetHeroDataQuery("Banner", {});
 
   const handleSearch = () => {
     if (search === "") {
@@ -27,20 +29,13 @@ const Hero = () => {
           {/* Left side - Text content */}
           <div className="w-full 1000px:w-[60%] flex flex-col items-center 1000px:items-start justify-center text-center 1000px:text-left mt-8 1000px:mt-0">
             <h2 className="text-gray-900 dark:text-white text-[28px] 400px:text-[32px] 800px:text-[40px] 1000px:text-[50px] 1200px:text-[60px] 1300px:text-[70px] font-bold font-Josefin leading-tight px-3 w-full 1000px:px-0 1100px:w-[85%] 1200px:w-[80%] 1300px:w-[75%]">
-              Improve Your Online{" "}
-              <span className="text-gray-900 dark:text-white">
-                Learning Experience
-              </span>{" "}
-              <span className="text-gray-900 dark:text-white">
-                Better Instantly
-              </span>
+              {data?.layout?.banner?.title}
             </h2>
 
             <br className="hidden 800px:block" />
 
             <p className="text-gray-600 dark:text-gray-300 font-Josefin font-normal text-[16px] 800px:text-[18px] leading-relaxed px-3 1000px:px-0 w-full 1000px:w-[85%] 1200px:w-[75%] mt-4 1000px:mt-0">
-              We have 40k+ Online courses & 500K+ Online registered students.
-              Find your desired Courses from them.
+              {data?.layout?.banner?.subTitle}
             </p>
 
             <br className="hidden 800px:block" />
@@ -98,7 +93,9 @@ const Hero = () => {
               {/* Image container */}
               <div className="absolute inset-0 flex items-center justify-center z-20">
                 <Image
-                  src={bannerImg1}
+                  src={data?.layout?.banner?.image?.url || bannerImg1}
+                  width={400}
+                  height={400}
                   alt="Learning illustration"
                   className="object-contain w-[85%] h-[85%] relative z-20"
                   priority
