@@ -4,6 +4,9 @@ import Header from "../app/components/Header";
 import Hero from "../app/components/Route/Hero";
 import PageHead from "./components/Common/PageHead";
 import Courses from "./components/Route/Courses";
+import Reviews from "./components/Route/Reviews";
+import FAQ from "./components/FAQ/FAQ";
+import Footer from "./components/Footer";
 
 const Page = () => {
   const [route, setRoute] = useState("Login");
@@ -25,6 +28,9 @@ const Page = () => {
       />
       <Hero />
       <Courses />
+      <Reviews />
+      <FAQ />
+      <Footer />
     </div>
   );
 };
