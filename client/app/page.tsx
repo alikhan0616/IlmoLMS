@@ -16,7 +16,7 @@ const Page = () => {
     <div className="">
       <PageHead
         title="Ilmo - LMS"
-        description="Ilmo is an interactive E-Learning platform where all students can learn and grow together"
+        description="Ilmo is an interactive E-Learning platform where all students can learn and grow together, developed by M. Ali Khan"
         keywords="Online Learning, Muhammad Ali Khan, Ali Khan, Learning, LMS, Programming, Tech"
       />
       <Header

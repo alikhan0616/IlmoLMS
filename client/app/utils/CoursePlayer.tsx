@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+
 type Props = {
   videoUrl: string;
   title: string;
 };
+
 const CoursePlayer = ({ videoUrl, title }: Props) => {
   const [videoData, setVideoData] = useState({
     otp: "",
@@ -30,13 +32,13 @@ const CoursePlayer = ({ videoUrl, title }: Props) => {
   }, [videoUrl]);
 
   return (
-    <div style={{ paddingTop: "41%", position: "relative" }}>
+    <div style={{ paddingTop: "56.25%", position: "relative" }}>
       {videoData.otp && videoData.playbackInfo !== "" && (
         <iframe
           src={`https://player.vdocipher.com/v2/?otp=${videoData?.otp}&playbackInfo=${videoData?.playbackInfo}&player=ZVxkdiwBeeCP9AuG`}
           style={{
             border: 0,
-            width: "90%",
+            width: "100%",
             height: "100%",
             position: "absolute",
             top: 0,

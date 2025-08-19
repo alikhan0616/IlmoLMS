@@ -19,7 +19,7 @@ const FAQ = () => {
 
   if (isLoading) {
     return (
-      <div className="py-16 bg-gray-50 dark:bg-gray-900">
+      <div className="py-16 items-center m-auto bg-gray-50 dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center">
             <div className="animate-pulse">
