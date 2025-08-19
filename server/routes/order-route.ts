@@ -4,7 +4,12 @@ import {
   isAuthenticated,
   updateAccessToken,
 } from "../middleware/auth";
-import { createOrder, getAllOrders } from "../controllers/order-controller";
+import {
+  createOrder,
+  getAllOrders,
+  newPayment,
+  sendStripePublishableKey,
+} from "../controllers/order-controller";
 
 const orderRouter = express.Router();
 
@@ -19,4 +24,10 @@ orderRouter.get(
   authorizeRoles("admin"),
   getAllOrders
 );
+
+// Get STRIPE Publishable Key
+orderRouter.get("/payment/stripepublishablekey", sendStripePublishableKey);
+
+// Payment Gate Way
+orderRouter.post("/payment", isAuthenticated, newPayment);
 export default orderRouter;
