@@ -37,7 +37,8 @@ const CourseContentList = (props: Props) => {
   return (
     <div
       className={`mt-[15px] w-full ${
-        !props.isDemo && `ml-[30px] min-h-screen sticky top-24 left-0 z-30`
+        !props.isDemo &&
+        `px-4 min-h-screen sticky top-24 left-0 z-30 overflow-hidden`
       }`}
     >
       <div className="space-y-4">
@@ -73,11 +74,11 @@ const CourseContentList = (props: Props) => {
                   className="w-full cursor-pointer flex justify-between items-center p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
                   onClick={() => toggleSection(section)}
                 >
-                  <div className="flex-1 text-left">
-                    <h3 className="text-[18px] font-Poppins font-[600] text-gray-900 dark:text-white mb-2">
+                  <div className="flex-1 text-left min-w-0">
+                    <h3 className="text-[18px] font-Poppins font-[600] text-gray-900 dark:text-white mb-2 truncate">
                       {section}
                     </h3>
-                    <div className="flex items-center gap-4 text-[14px] text-gray-600 dark:text-gray-400">
+                    <div className="flex items-center gap-4 text-[14px] text-gray-600 dark:text-gray-400 flex-wrap">
                       <span className="flex items-center gap-1">
                         <MdOutlineOndemandVideo size={16} />
                         {sectionVideoCount} Lessons
@@ -90,7 +91,7 @@ const CourseContentList = (props: Props) => {
                       </span>
                     </div>
                   </div>
-                  <div className="ml-4">
+                  <div className="ml-4 flex-shrink-0">
                     {isSectionVisible ? (
                       <BsChevronUp
                         size={20}
@@ -152,7 +153,7 @@ const CourseContentList = (props: Props) => {
                                 >
                                   {item.title}
                                 </h4>
-                                <div className="flex items-center gap-2 mt-2">
+                                <div className="flex items-center gap-2 mt-2 flex-wrap">
                                   <BiTime
                                     size={14}
                                     className="text-gray-500 dark:text-gray-400"
