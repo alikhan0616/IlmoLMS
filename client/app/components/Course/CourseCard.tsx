@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { AiOutlineUser } from "react-icons/ai";
-import { BiTime } from "react-icons/bi";
 import { MdOndemandVideo } from "react-icons/md";
 
 type Props = {
