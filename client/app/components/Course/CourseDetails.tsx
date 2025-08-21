@@ -8,6 +8,8 @@ import { format } from "timeago.js";
 import { Elements } from "@stripe/react-stripe-js";
 import CheckoutForm from "../Payment/CheckoutForm";
 import { useLoadUserQuery } from "@/redux/features/api/apiSlice";
+import defaultAvatar from "../../../public/assets/avatar.jpg";
+import Image from "next/image";
 
 type Props = {
   data: any;
@@ -142,10 +144,14 @@ const CourseDetails = ({ data, clientSecret, stripePromise }: Props) => {
                         className="border-b border-gray-200 dark:border-gray-700 pb-6 last:border-b-0"
                       >
                         <div className="flex gap-4">
-                          <div className="w-[50px] h-[50px] bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
-                            <span className="text-white font-Poppins font-[600] text-[16px]">
-                              {item.user.name.slice(0, 2).toUpperCase()}
-                            </span>
+                          <div className="">
+                            <Image
+                              alt="user-img"
+                              src={item?.user?.avatar?.url || defaultAvatar}
+                              width={50}
+                              height={50}
+                              className="h-[50px] w-[50px] object-contain rounded-full"
+                            />
                           </div>
                           <div className="flex-1">
                             <div className="flex flex-col 800px:flex-row 800px:items-center gap-2 800px:gap-4 mb-3">

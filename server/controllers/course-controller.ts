@@ -101,7 +101,12 @@ export const getSingleCourse = CatchAsyncError(
             "-courseData.videoUrl -courseData.suggestion -courseData.questions -courseData.links"
           );
 
-        await redis.set(courseId as string, JSON.stringify(course));
+        await redis.set(
+          courseId as string,
+          JSON.stringify(course),
+          "EX",
+          604800
+        );
 
         res.status(200).json({
           success: true,
@@ -264,6 +269,8 @@ export const addAnswer = CatchAsyncError(
       const newAnswer: any = {
         user: req.user,
         answer,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
 
       // Add answer to Course Content
@@ -354,14 +361,15 @@ export const addReview = CatchAsyncError(
         course.ratings = avg / course.reviews.length;
       }
 
+      await redis.set(courseId as string, JSON.stringify(course), "EX", 604800);
       await course?.save();
 
-      const notification = {
+      // Create Notification
+      await NotificationModel.create({
+        user: req.user?._id,
         title: "New Review Recieved",
         message: `${req.user?.name} has given a review on your course ${course?.name}`,
-      };
-
-      // Create Notification
+      });
 
       res.status(200).json({
         success: true,
@@ -401,12 +409,16 @@ export const addReplyToReview = CatchAsyncError(
       const replyData: any = {
         user: req.user,
         comment,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       };
 
       if (!review?.commentReplies) {
         review.commentReplies = [];
       }
       review?.commentReplies.push(replyData);
+
+      await redis.set(courseId, JSON.stringify(course), "EX", 604800);
 
       await course.save();
 
