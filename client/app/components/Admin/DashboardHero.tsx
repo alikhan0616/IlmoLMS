@@ -8,7 +8,7 @@ const DashboardHero = ({ isDashboard }: Props) => {
   const [open, setOpen] = useState(false);
   return (
     <div className="">
-      <DashboardHeader open={open} setOpen={setOpen} />
+      <DashboardHeader />
       {isDashboard && <DashboardWidgets open={open} />}
     </div>
   );

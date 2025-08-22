@@ -14,8 +14,9 @@ import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
 
 type Props = {
-  setOpen: (open: boolean) => void; // Add this
-  setRoute?: (route: string) => void; // Make optional to match CustomModal
+  setOpen: (open: boolean) => void;
+  setRoute?: (route: string) => void;
+  refetch: any;
 };
 
 const schema = Yup.object().shape({
@@ -25,7 +26,7 @@ const schema = Yup.object().shape({
   password: Yup.string().required("Please enter your passowrd!").min(6),
 });
 
-const Login = ({ setOpen, setRoute }: Props) => {
+const Login = ({ setOpen, setRoute, refetch }: Props) => {
   const [show, setShow] = useState(false);
   const [login, { isSuccess, error }] = useLoginMutation();
 
@@ -41,6 +42,7 @@ const Login = ({ setOpen, setRoute }: Props) => {
     if (isSuccess) {
       toast.success("Login successfully");
       setOpen(false);
+      refetch();
     }
     if (error) {
       if ("data" in error) {

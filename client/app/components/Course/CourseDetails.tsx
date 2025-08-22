@@ -313,7 +313,11 @@ const CourseDetails = ({
                         stripe={stripePromise}
                         options={{ clientSecret }}
                       >
-                        <CheckoutForm setOpen={setOpen} data={data} />
+                        <CheckoutForm
+                          setOpen={setOpen}
+                          data={data}
+                          user={user}
+                        />
                       </Elements>
                     ) : (
                       <div className="p-6 text-center">

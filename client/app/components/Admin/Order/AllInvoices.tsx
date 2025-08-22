@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
-import { Box } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useTheme } from "next-themes";
 import { useGetAllCoursesQuery } from "../../../../redux/features/course/courseApi";
 import Loader from "../../Common/Loader/Loader";
@@ -61,12 +61,19 @@ const AllInvoices = ({ isDashboard }: Props) => {
             flex: 0.2,
             renderCell: (params: any) => {
               return (
-                <a href={`mailto:${params.row.userEmail}`}>
-                  <AiOutlineMail
-                    className="dark:text-white text-black"
-                    size={20}
-                  />
-                </a>
+                <Button>
+                  <a
+                    target="_blank"
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(
+                      params.row.userEmail
+                    )}`}
+                  >
+                    <AiOutlineMail
+                      className="dark:text-white text-black"
+                      size={20}
+                    />
+                  </a>
+                </Button>
               );
             },
           },

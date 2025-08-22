@@ -1,32 +1,58 @@
 "use client";
 import ThemeSwitcher from "@/app/utils/ThemeSwitcher";
-import { useState } from "react";
+import {
+  useGetAllNotificationsQuery,
+  useUpdateNotificationMutation,
+} from "@/redux/features/notifications/notificationApi";
+import { useEffect, useState } from "react";
 import { IoMdNotificationsOutline } from "react-icons/io";
-type Props = {
-  open?: boolean;
-  setOpen?: any;
-};
-const DashboardHeader = ({ open, setOpen }: Props) => {
-  const [notifications] = useState([
-    {
-      _id: "1",
-      title: "New Order Received",
-      message: "You have received a new order from John Doe.",
-      createdAt: "2025-08-09T10:00:00Z",
-    },
-    {
-      _id: "2",
-      title: "Payment Successful",
-      message: "Payment for order #1234 has been completed.",
-      createdAt: "2025-08-08T15:30:00Z",
-    },
-    {
-      _id: "3",
-      title: "New Message",
-      message: "A customer sent you a new message.",
-      createdAt: "2025-08-07T09:15:00Z",
-    },
-  ]);
+import socketIO from "socket.io-client";
+import { format } from "timeago.js";
+const ENDPOINT = process.env.NEXT_PUBLIC_SOCKET_SERVER_URI || "";
+const socketId = socketIO(ENDPOINT, { transports: ["websocket"] });
+
+const DashboardHeader = () => {
+  const [open, setOpen] = useState(false);
+  const { data, refetch } = useGetAllNotificationsQuery(undefined, {
+    refetchOnMountOrArgChange: true,
+  });
+  const [updateNotification, { isSuccess }] = useUpdateNotificationMutation();
+  const [notifications, setNotifications] = useState<any>([]);
+  const [audio] = useState(
+    new Audio(
+      "https://res.cloudinary.com/duxd5fq1t/video/upload/v1755855673/mixkit-long-pop-2358_rbfvi1.mp3"
+    )
+  );
+
+  console.log(notifications);
+  const playNotificationSound = () => {
+    audio.play();
+  };
+
+  useEffect(() => {
+    if (data) {
+      setNotifications(
+        data.notifications.filter((item: any) => item.status === "unread")
+      );
+    }
+
+    if (isSuccess) {
+      refetch();
+    }
+
+    audio.load();
+  }, [data, isSuccess]);
+
+  useEffect(() => {
+    socketId.on("newNotification", (data) => {
+      refetch();
+      playNotificationSound();
+    });
+  }, []);
+
+  const handleNotificationStatusChange = async (id: string) => {
+    await updateNotification(id);
+  };
 
   return (
     <div className="w-full flex items-center justify-end p-6 fixed top-5 right-0 z-[9999999]">
@@ -39,7 +65,7 @@ const DashboardHeader = ({ open, setOpen }: Props) => {
       >
         <IoMdNotificationsOutline className="text-2xl cursor-pointer dark:text-white text-black" />
         <span className="absolute -top-2 -right-2 bg-[#3ccba0] rounded-full w-[20px] h-[20px] text-[12px] flex items-center justify-center text-white">
-          {notifications.length}
+          {notifications && notifications.length}
         </span>
       </div>
 
@@ -49,23 +75,29 @@ const DashboardHeader = ({ open, setOpen }: Props) => {
             Notifications
           </h5>
 
-          {notifications.map((item, index) => (
-            <div
-              className="dark:bg-[#2d3a4e] bg-[#00000013] font-Poppins border-b dark:border-b-[#ffffff47] border-b-[#0000000f]"
-              key={index}
-            >
-              <div className="w-full flex items-center justify-between p-2">
-                <p className="text-black dark:text-white">{item.title}</p>
-                <p className="text-black dark:text-white cursor-pointer">
-                  Mark as read
+          {notifications &&
+            notifications.map((item: any, index: number) => (
+              <div
+                className="dark:bg-[#2d3a4e] bg-[#00000013] font-Poppins border-b dark:border-b-[#ffffff47] border-b-[#0000000f]"
+                key={index}
+              >
+                <div className="w-full flex items-center justify-between p-2">
+                  <p className="text-black dark:text-white">{item.title}</p>
+                  <p
+                    onClick={() => handleNotificationStatusChange(item._id)}
+                    className="text-black dark:text-white cursor-pointer"
+                  >
+                    Mark as read
+                  </p>
+                </div>
+                <p className="px-2 text-black dark:text-white">
+                  {item.message}
+                </p>
+                <p className="p-2 text-black dark:text-white text-[14px]">
+                  {format(item.createdAt)}
                 </p>
               </div>
-              <p className="px-2 text-black dark:text-white">{item.message}</p>
-              <p className="p-2 text-black dark:text-white text-[14px]">
-                {new Date(item.createdAt).toLocaleString()}
-              </p>
-            </div>
-          ))}
+            ))}
         </div>
       )}
     </div>

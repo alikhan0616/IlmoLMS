@@ -3,12 +3,13 @@ import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import Ratings from "@/app/utils/Ratings";
 
-// Mock data - replace with your actual data source
+// Updated data with real people's photos from Unsplash
 const reviewsData = [
   {
     id: 1,
     name: "Sarah Johnson",
-    avatar: "/api/placeholder/60/60",
+    avatar:
+      "https://images.unsplash.com/photo-1484863137850-59afcfe05386?w=400&h=400&fit=crop&crop=face",
     profession: "Full Stack Developer",
     comment:
       "The courses here are absolutely amazing! I've learned so much and the instructors are top-notch. The interactive content keeps me engaged throughout.",
@@ -17,7 +18,8 @@ const reviewsData = [
   {
     id: 2,
     name: "Michael Chen",
-    avatar: "/api/placeholder/60/60",
+    avatar:
+      "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop&crop=face",
     profession: "Data Scientist",
     comment:
       "Excellent platform for learning. The course structure is well-organized and the practical examples really help in understanding complex concepts.",
@@ -26,7 +28,8 @@ const reviewsData = [
   {
     id: 3,
     name: "Emily Rodriguez",
-    avatar: "/api/placeholder/60/60",
+    avatar:
+      "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop&crop=face",
     profession: "UX Designer",
     comment:
       "I love how comprehensive the courses are. From beginner to advanced, there's something for everyone. Highly recommended!",
@@ -35,7 +38,8 @@ const reviewsData = [
   {
     id: 4,
     name: "David Wilson",
-    avatar: "/api/placeholder/60/60",
+    avatar:
+      "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop&crop=face",
     profession: "Software Engineer",
     comment:
       "The quality of education here is outstanding. The instructors are knowledgeable and the course materials are up-to-date with industry standards.",
@@ -44,7 +48,8 @@ const reviewsData = [
   {
     id: 5,
     name: "Lisa Thompson",
-    avatar: "/api/placeholder/60/60",
+    avatar:
+      "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=400&h=400&fit=crop&crop=face",
     profession: "Product Manager",
     comment:
       "Great learning experience! The courses are well-structured and the community support is fantastic. I've gained valuable skills for my career.",
@@ -53,7 +58,8 @@ const reviewsData = [
   {
     id: 6,
     name: "James Anderson",
-    avatar: "/api/placeholder/60/60",
+    avatar:
+      "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop&crop=face",
     profession: "Marketing Specialist",
     comment:
       "The platform offers incredible value for money. The variety of courses and the quality of instruction exceeded my expectations.",
@@ -87,7 +93,6 @@ const ReviewCard = ({ review }: { review: any }) => {
       {/* Rating */}
       <div className="flex items-center mb-4">
         <Ratings rating={review.rating} />
-
         <span className="ml-2 text-sm text-gray-600 dark:text-gray-400">
           ({review.rating}/5)
         </span>
@@ -95,7 +100,7 @@ const ReviewCard = ({ review }: { review: any }) => {
 
       {/* Comment */}
       <p className="text-gray-700 dark:text-gray-300 leading-relaxed italic">
-        {review.comment}
+        &quot;{review.comment}&quot;
       </p>
     </div>
   );
@@ -111,8 +116,8 @@ const Reviews = () => {
             What Our Students Say
           </h2>
           <p className="text-xl text-gray-600 dark:text-gray-400 max-w-3xl mx-auto">
-            Dont just take our word for it. Heres what our amazing students have
-            to say about their learning experience.
+            Don&apos;t just take our word for it. Here&apos;s what our amazing
+            students have to say about their learning experience.
           </p>
         </div>
 
