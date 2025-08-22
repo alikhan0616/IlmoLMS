@@ -98,78 +98,113 @@ const DashboardWidgets: FC<Props> = ({ open }) => {
   }, [isLoading, ordersLoading, data, ordersData]);
 
   return (
-    <div className="mt-[30px] min-h-screen">
-      <div className="flex">
-        <div className="w-[75%] p-8">
-          <UserAnalytics isDashboard={true} />
+    <div className="space-y-6">
+      {/* Top Section - Analytics and Stats */}
+      <div className="grid grid-cols-1 xl:grid-cols-4 gap-6">
+        {/* User Analytics - Takes 3 columns on xl screens */}
+        <div className="xl:col-span-3">
+          <div className="bg-white dark:bg-[#111C43] rounded-lg shadow-lg p-6 h-full">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              User Analytics
+            </h3>
+            <UserAnalytics isDashboard={true} />
+          </div>
         </div>
 
-        <div className="w-[25%] flex flex-col justify-center space-y-6 pr-8">
-          <div className="w-full dark:bg-[#111C43] rounded-sm shadow">
-            <div className="flex items-center p-5 justify-between">
-              <div className="">
-                <BiBorderLeft className="dark:text-[#45CBA0] text-[#000] text-[30px]" />
-                <h5 className="pt-2 font-Poppins dark:text-[#fff] text-black text-[20px]">
-                  {ordersComparePercentage?.currentMonth}
-                </h5>
-                <h5 className="py-2 font-Poppins dark:text-[#45CBA0] text-black text-[20px] font-[400]">
+        {/* Stats Cards - Takes 1 column on xl screens, stacks on smaller screens */}
+        <div className="xl:col-span-1 space-y-4">
+          {/* Sales Card */}
+          <div className="bg-white dark:bg-[#111C43] rounded-lg shadow-lg p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <div className="flex items-center mb-2">
+                  <BiBorderLeft className="dark:text-[#45CBA0] text-gray-700 text-2xl mr-2" />
+                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                    Sales
+                  </span>
+                </div>
+                <h4 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {ordersComparePercentage?.currentMonth || 0}
+                </h4>
+                <p className="text-sm text-gray-600 dark:text-[#45CBA0]">
                   Sales Obtained
-                </h5>
+                </p>
               </div>
-              <div>
+              <div className="flex flex-col items-center">
                 <CircularProgressWithLabel
                   value={ordersComparePercentage?.percentChange > 0 ? 100 : 0}
                   open={open}
                 />
-                <h5 className="text-center pt-4">
+                <span className="text-xs font-medium mt-2 text-gray-600 dark:text-white">
                   {ordersComparePercentage?.percentChange > 0
                     ? "+" + ordersComparePercentage?.percentChange.toFixed(2)
-                    : "-" +
-                      ordersComparePercentage?.percentChange.toFixed(2)}{" "}
+                    : ordersComparePercentage?.percentChange?.toFixed(2) ||
+                      "0"}{" "}
                   %
-                </h5>
+                </span>
               </div>
             </div>
           </div>
 
-          <div className="w-full dark:bg-[#111C43] rounded-sm shadow">
-            <div className="flex items-center p-5 justify-between">
-              <div className="">
-                <PiUsersFourLight className="dark:text-[#45CBA0] text-[#000] text-[30px]" />
-                <h5 className="pt-2 font-Poppins dark:text-[#fff] text-black text-[20px]">
-                  {userComparePercentage?.currentMonth}
-                </h5>
-                <h5 className="py-2 font-Poppins dark:text-[#45CBA0] text-black text-[20px] font-[400]">
+          {/* Users Card */}
+          <div className="bg-white dark:bg-[#111C43] rounded-lg shadow-lg p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex-1">
+                <div className="flex items-center mb-2">
+                  <PiUsersFourLight className="dark:text-[#45CBA0] text-gray-700 text-2xl mr-2" />
+                  <span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                    Users
+                  </span>
+                </div>
+                <h4 className="text-2xl font-bold text-gray-900 dark:text-white">
+                  {userComparePercentage?.currentMonth || 0}
+                </h4>
+                <p className="text-sm text-gray-600 dark:text-[#45CBA0]">
                   New Users
-                </h5>
+                </p>
               </div>
-              <div>
+              <div className="flex flex-col items-center">
                 <CircularProgressWithLabel
                   value={userComparePercentage?.percentChange > 0 ? 100 : 0}
                   open={open}
                 />
-                <h5 className="text-center pt-4">
+                <span className="text-xs font-medium mt-2 text-gray-600 dark:text-white">
                   {userComparePercentage?.percentChange > 0
                     ? "+" + userComparePercentage?.percentChange.toFixed(2)
-                    : "-" +
-                      userComparePercentage?.percentChange.toFixed(2)}{" "}
+                    : userComparePercentage?.percentChange?.toFixed(2) ||
+                      "0"}{" "}
                   %
-                </h5>
+                </span>
               </div>
             </div>
           </div>
         </div>
       </div>
 
-      <div className="flex gap-4 mt-[20px]">
-        <div className="w-[65%] dark:bg-[#111c43] bg-white mt-[30px] h-[40vh] shadow-sm rounded-lg p-4">
-          <OrderAnalytics isDashboard={true} />
+      {/* Bottom Section - Order Analytics and Recent Transactions */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Order Analytics - Takes 2 columns on lg screens */}
+        <div className="lg:col-span-2">
+          <div className="bg-white dark:bg-[#111c43] rounded-lg shadow-lg p-6 h-full">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              Order Analytics
+            </h3>
+            <div className="h-80">
+              <OrderAnalytics isDashboard={true} />
+            </div>
+          </div>
         </div>
-        <div className="w-[35%] p-5">
-          <h5 className="dark:text-[#fff] text-black text-[20px] font-[400] font-Poppins pb-3">
-            Recent Transactions
-          </h5>
-          <AllInvoices isDashboard={true} />
+
+        {/* Recent Transactions - Takes 1 column on lg screens */}
+        <div className="lg:col-span-1">
+          <div className="bg-white dark:bg-[#111c43] rounded-lg shadow-lg p-6 h-full">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+              Recent Transactions
+            </h3>
+            <div className="overflow-y-auto max-h-80">
+              <AllInvoices isDashboard={true} />
+            </div>
+          </div>
         </div>
       </div>
     </div>

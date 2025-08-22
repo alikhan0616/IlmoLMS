@@ -121,9 +121,14 @@ const FAQ = () => {
               Can&apos;t find the answer you&apos;re looking for? Please chat
               with our friendly team.
             </p>
-            <button className="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">
-              Contact Support
-            </button>
+            <a
+              target="_blank"
+              href={`https://mail.google.com/mail/?view=cm&fs=1&to=nexvendor1@gmail.com`}
+            >
+              <button className="inline-flex cursor-pointer items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 transition-colors">
+                Contact Support
+              </button>
+            </a>
           </div>
         </div>
       </div>

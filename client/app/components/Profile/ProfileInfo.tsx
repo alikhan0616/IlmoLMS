@@ -16,6 +16,7 @@ type Props = {
 };
 const ProfileInfo = ({ user, avatar }: Props) => {
   const [name, setName] = useState(user && user.name);
+  const [courses, setCourses] = useState([]);
   const [updateAvatar, { isSuccess, error }] = useUpdateAvatarMutation();
   const [editProfile, { isSuccess: success, error: editError }] =
     useEditProfileMutation();
@@ -70,6 +71,7 @@ const ProfileInfo = ({ user, avatar }: Props) => {
       }
     }
   }, [isSuccess, error, editError, success]);
+
   const handleSubmit = async (e: any) => {
     e.preventDefault();
     if (name.length < 3) {
@@ -127,7 +129,7 @@ const ProfileInfo = ({ user, avatar }: Props) => {
               <label className="block pb-2">Email Address</label>
               <input
                 type="email"
-                className={`${styles.input} !w-[95%] mb-4 800px:mb-0`}
+                className={`${styles.input} !w-[95%] mb-4 800px:mb-0 cursor-not-allowed`}
                 required
                 readOnly
                 value={user?.email}

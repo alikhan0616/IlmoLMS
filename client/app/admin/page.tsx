@@ -4,20 +4,24 @@ import PageHead from "../components/Common/PageHead";
 import AdminSidebar from "../components/Admin/Sidebar/AdminSidebar";
 import DashboardHero from "../components/Admin/DashboardHero";
 import AdminProtected from "../hooks/adminProtected";
+
 const Page = () => {
   return (
-    <div className="">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
       <AdminProtected>
         <PageHead
           title="Ilmo - Admin"
           description="Ilmo is an interactive E-Learning platform where all students can learn and grow together"
           keywords="Online Learning, Muhammad Ali Khan, Ali Khan, Learning, LMS, Programming, Tech"
         />
-        <div className="flex h-[200vh]">
-          <div className="1500px:w-[16%] w-1/5">
+        <div className="flex">
+          {/* Sidebar */}
+          <div className="hidden lg:block lg:w-64 xl:w-80 fixed left-0 top-0 h-full z-50">
             <AdminSidebar />
           </div>
-          <div className="w-[85%] ">
+
+          {/* Main Content */}
+          <div className="flex-1 lg:ml-64 xl:ml-80 min-h-screen">
             <DashboardHero isDashboard={true} />
           </div>
         </div>

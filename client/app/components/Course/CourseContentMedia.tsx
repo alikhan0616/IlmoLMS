@@ -514,19 +514,20 @@ const CourseContentMedia = ({
                           </div>
                         </div>
 
-                        {user.role === "admin" && (
-                          <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
-                            <button
-                              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-Poppins font-[500] text-[14px]"
-                              onClick={() => {
-                                setIsReviewReply(!isReviewReply);
-                                setReviewId(item?._id);
-                              }}
-                            >
-                              Add Reply
-                            </button>
-                          </div>
-                        )}
+                        {user.role === "admin" &&
+                          item.commentReplies.length === 0 && (
+                            <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
+                              <button
+                                className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 font-Poppins font-[500] text-[14px]"
+                                onClick={() => {
+                                  setIsReviewReply(!isReviewReply);
+                                  setReviewId(item?._id);
+                                }}
+                              >
+                                Add Reply
+                              </button>
+                            </div>
+                          )}
 
                         {isReviewReply && reviewId === item?._id && (
                           <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-600">
