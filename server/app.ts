@@ -21,7 +21,7 @@ app.use(cookieParser());
 // CORS Config
 app.use(
   cors({
-    origin: ["https://ilmolms.onrender.com"],
+    origin: ["https://ilmo-lms.vercel.app"],
     credentials: true, // Allow cookies to be sent
   })
 );
