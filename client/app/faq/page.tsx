@@ -12,7 +12,7 @@ const Page = () => {
   return (
     <div className="">
       <PageHead
-        title="Abous us - Ilmo"
+        title="FAQ - Ilmo"
         description="Ilmo is an interactive E-Learning platform where all students can learn and grow together, developed by M. Ali Khan"
         keywords="Online Learning, Muhammad Ali Khan, Ali Khan, Learning, LMS, Programming, Tech"
       />

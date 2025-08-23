@@ -2,7 +2,7 @@
 import { useGetAllUserCoursesQuery } from "@/redux/features/course/courseApi";
 import { useGetHeroDataQuery } from "@/redux/features/layout/layoutApi";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import Loader from "../components/Common/Loader/Loader";
 import Header from "../components/Header";
 import PageHead from "../components/Common/PageHead";
@@ -11,7 +11,8 @@ import { BiSearch } from "react-icons/bi";
 import { MdFilterList } from "react-icons/md";
 import { HiAcademicCap } from "react-icons/hi";
 
-const Page = () => {
+// Separate component for search params logic
+const CoursesContent = () => {
   const searchParams = useSearchParams();
   const search = searchParams?.get("title");
   const { data, isLoading } = useGetAllUserCoursesQuery(undefined, {});
@@ -42,8 +43,7 @@ const Page = () => {
 
     setCourses(filteredCourses);
   }, [category, search, data]);
-  console.log(category);
-  console.log(courses);
+
   const categories = categoriesData?.layout.categories;
   const totalCourses = courses?.length || 0;
 
@@ -232,6 +232,14 @@ const Page = () => {
         </>
       )}
     </div>
+  );
+};
+
+const Page = () => {
+  return (
+    <Suspense fallback={<Loader />}>
+      <CoursesContent />
+    </Suspense>
   );
 };
 
