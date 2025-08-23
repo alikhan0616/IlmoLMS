@@ -21,7 +21,7 @@ app.use(cookieParser());
 // CORS Config
 app.use(
   cors({
-    origin: ["http://localhost:3000"],
+    origin: ["https://ilmolms.onrender.com"],
     credentials: true, // Allow cookies to be sent
   })
 );
