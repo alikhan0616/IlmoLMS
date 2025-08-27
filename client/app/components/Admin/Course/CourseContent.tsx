@@ -55,6 +55,7 @@ const CourseContent = ({
       item.title === "" ||
       item.description === "" ||
       item.videoUrl === "" ||
+      item.videoLength === "" ||
       item.links[0].title == "" ||
       item.links[0].url == ""
     ) {
