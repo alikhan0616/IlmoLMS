@@ -29,7 +29,12 @@ const Hero = () => {
       ) : (
         <div className="w-full my-20 min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50 dark:from-[#0a0e27] dark:via-[#1a1f3a] dark:to-[#0f1419] relative overflow-hidden">
           {/* Animated background overlay */}
-          <div className="absolute top-[100px] 1000px:top-[unset] 1500px:h-[700px] 1100px:h-[600px] h-[50vh] w-full hero_animation rounded-full opacity-30"></div>
+          <div
+            className="absolute inset-0 flex items-center justify-center pointer-events-none"
+            style={{ zIndex: 1 }}
+          >
+            <div className="hero_animation w-full max-w-[1200px] h-[700px] 1100px:h-[600px] 1500px:h-[700px] rounded-full opacity-30 mx-auto"></div>
+          </div>
 
           <div className="w-[95%] 800px:w-[92%] m-auto relative z-10 pt-[80px]">
             <div className="flex flex-col-reverse 1000px:flex-row items-center justify-between min-h-screen py-8 1000px:py-0">
