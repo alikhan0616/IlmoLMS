@@ -3,7 +3,7 @@
 
 ## Introduction / Overview  
 
-Ilmo is a **Learning Management System (LMS)** built using **Next.js** for client-side rendering, ensuring SEO friendliness and a smooth user experience, combined with a strong **Node.js/Express** backend for handling core services.  
+Ilmo is a **Learning Management System (LMS)** built on **TypeScript** using **Next.js** for client-side rendering, ensuring SEO friendliness and a smooth user experience, combined with a strong **Node.js/Express** backend for handling core services.  
 
 The platform enables an admin to create and publish courses that users can purchase and enroll in. Learners can watch course videos directly on the platform through an integrated video player, access supporting materials via a dedicated resources section for each video, and actively engage by posting questions related to specific sections.  
 
